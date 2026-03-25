@@ -1,4 +1,4 @@
-# 🚗 Maquine Auto Center - API (MVP)
+# 🚗 Maquiné Auto Center - API (MVP)
 
 Este projeto é um **MVP (Minimum Viable Product)** desenvolvido para a **Maquiné Auto Center**, com o objetivo de fornecer uma base sólida para um sistema de gestão de mecânica.
 
