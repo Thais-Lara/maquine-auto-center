@@ -1,6 +1,6 @@
 # 🚗 Maquine Auto Center - API (MVP)
 
-Este projeto é um **MVP (Minimum Viable Product)** desenvolvido para a **Maquine Automotiva**, com o objetivo de fornecer uma base sólida para um sistema de gestão de mecânica.
+Este projeto é um **MVP (Minimum Viable Product)** desenvolvido para a **Maquine Auto Center**, com o objetivo de fornecer uma base sólida para um sistema de gestão de mecânica.
 
 A aplicação foi construída utilizando **Laravel** e containerizada com **Docker**, utilizando **PostgreSQL** como banco de dados.
 
