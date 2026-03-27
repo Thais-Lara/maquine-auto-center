@@ -5,29 +5,29 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-   public function login(LoginRequest $request)
-{
-    if (!Auth::attempt($request->only('email', 'password'))) {
+    public function login(LoginRequest $request)
+    {
+        if (! Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Credenciais inválidas',
+            ], 401);
+        }
+
+        $user = Auth::user();
+
         return response()->json([
-            'status' => false,
-            'message' => 'Credenciais inválidas'
-        ], 401);
+            'status' => true,
+            'message' => 'Login realizado com sucesso',
+            'user' => $user,
+        ]);
     }
-
-    $user = Auth::user();
-
-    return response()->json([
-        'status' => true,
-        'message' => 'Login realizado com sucesso',
-        'user' => $user
-    ]);
-}
 
     public function register(RegisterRequest $request)
     {
