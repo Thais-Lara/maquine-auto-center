@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/teste', function () {
     return response()->json([
         'status' => true,
-        'msg' => 'API funcionando 🚀'
+        'msg' => 'API funcionando 🚀',
     ]);
 });
 
