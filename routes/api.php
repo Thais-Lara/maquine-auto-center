@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,7 @@ Route::get('/teste', function () {
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/register', [LoginController::class, 'register']);
+
+// Route::middleware(['auth'])->group(function () {
+// });
+Route::apiResource('clientes', ClientController::class);
