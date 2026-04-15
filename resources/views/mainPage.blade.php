@@ -31,97 +31,53 @@
                         <th class="px-2 py-2 text-center">Ações</th>
                     </tr>
                 </thead>
-
+            
                 <tbody>
-                    <tr class="border-b border-white/10 hover:bg-white/5 transition">
-                        <td class="px-2 py-2 text-white">João Silva</td>
-                        <td class="px-2 py-2">123.456.789-00</td>
-                        <td class="px-2 py-2">joao@email.com</td>
-                        <td class="px-2 py-2">(31) 99999-9999</td>
+    @forelse ($clientes as $cliente)
+        <tr class="border-b border-white/10 hover:bg-white/5 transition">
+            <td class="px-2 py-2 text-white">
+                {{ $cliente->nome }}
+            </td>
 
-                        <td class="px-2 py-2">
-                            <div class="flex justify-center gap-1">
-                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Editar
-                                </button>
+            <td class="px-2 py-2">
+                {{ $cliente->cpf_cnpj }}
+            </td>
 
-                                <button class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Excluir
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+            <td class="px-2 py-2">
+                {{ $cliente->email }}
+            </td>
 
-                
-                <tbody>
-                    <tr class="border-b border-white/10 hover:bg-white/5 transition">
-                        <td class="px-2 py-2 text-white">José Oliveira</td>
-                        <td class="px-2 py-2">123.232.123-45</td>
-                        <td class="px-2 py-2">jose@email.com</td>
-                        <td class="px-2 py-2">(31) 99999-9999</td>
+            <td class="px-2 py-2">
+                {{ $cliente->telefone }}
+            </td>
 
-                        <td class="px-2 py-2">
-                            <div class="flex justify-center gap-1">
-                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Editar
-                                </button>
+            <td class="px-2 py-2">
+                <div class="flex justify-center gap-1">
+                    <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-[10px] transition">
+                        Editar
+                    </button>
 
-                                <button class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Excluir
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-
-                
-                <tbody>
-                    <tr class="border-b border-white/10 hover:bg-white/5 transition">
-                        <td class="px-2 py-2 text-white">João Silva</td>
-                        <td class="px-2 py-2">123.456.789-00</td>
-                        <td class="px-2 py-2">joao@email.com</td>
-                        <td class="px-2 py-2">(31) 99999-9999</td>
-
-                        <td class="px-2 py-2">
-                            <div class="flex justify-center gap-1">
-                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Editar
-                                </button>
-
-                                <button class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Excluir
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-
-
-                
-                <tbody>
-                    <tr class="border-b border-white/10 hover:bg-white/5 transition">
-                        <td class="px-2 py-2 text-white">Cleyton</td>
-                        <td class="px-2 py-2">233.222.123-45</td>
-                        <td class="px-2 py-2">cleyton@email.com</td>
-                        <td class="px-2 py-2">(31) 99999-9999</td>
-
-                        <td class="px-2 py-2">
-                            <div class="flex justify-center gap-1">
-                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Editar
-                                </button>
-
-                                <button class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-[10px] transition">
-                                    Excluir
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+                    <button class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-[10px] transition">
+                        Excluir
+                    </button>
+                </div>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="5" class="text-center py-4 text-gray-400">
+                Nenhum cliente cadastrado.
+            </td>
+        </tr>
+    @endforelse
+</tbody>
+             
 
 
             </table>
+            <div class="mt-4 text-white">
+                {{ $clientes->links('pagination::tailwind') }}
+            </div>
         </div>
 
     </div>
