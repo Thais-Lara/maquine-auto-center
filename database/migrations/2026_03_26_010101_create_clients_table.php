@@ -10,6 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clientes', function (Blueprint $table) {
+            $table->uuid('uuid')->unique();
             $table->id();
             $table->string('nome');
             $table->string('documento', 14)->unique();
