@@ -4,64 +4,60 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Models\Client;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ClientController extends Controller
 {
-    // Simulando um banco de dados na memória
-    private static $clientesFake = [
-        ['id' => 1, 'nome' => 'Oficina do Prime', 'documento' => '12345678000199', 'documento_tipo' => 'CNPJ'],
-        ['id' => 2, 'nome' => 'Carlos Mecânico', 'documento' => '11122233344', 'documento_tipo' => 'CPF'],
-    ];
-
-    // GET /clients - Listar
-    public function index()
+    // GET /clients - Listar todos
+    public function index(): JsonResponse
     {
         return response()->json([
-            'message' => 'Lista de clientes (Modo Simulação)',
-            'data' => self::$clientesFake,
+            'message' => 'Lista de clientes',
+            'data' => Client::all(),
         ], 200);
     }
 
     // POST /clients - Criar
-    public function store(StoreClientRequest $request)
+    public function store(StoreClientRequest $request): JsonResponse
     {
-        // Pega os dados que passaram na validação do StoreClientRequest
-        $dados = $request->validated();
-
-        // Simula a criação adicionando um ID aleatório
-        $novoCliente = array_merge(['id' => rand(3, 999)], $dados);
+        $client = Client::create($request->validated());
 
         return response()->json([
-            'message' => 'Cliente criado com sucesso (Simulado)!',
-            'data' => $novoCliente,
-        ], 201); // 201 é o status de "Created"
+            'message' => 'Cliente criado com sucesso!',
+            'data' => $client,
+        ], 201);
     }
 
-    // GET /clients/{id} - Mostrar um
-    public function show($id)
+    // GET /clients/{id} - Buscar por ID
+    public function show(Client $client): JsonResponse
     {
-        // Apenas para teste, retornamos sempre o primeiro do mock
+
         return response()->json([
-            'data' => self::$clientesFake[0],
+            'data' => $client,
         ], 200);
     }
 
     // PUT /clients/{id} - Atualizar
-    public function update(UpdateClientRequest $request, $id)
+    public function update(UpdateClientRequest $request, Client $client): JsonResponse
     {
-        $dados = $request->validated();
+        $client->update($request->validated());
 
         return response()->json([
-            'message' => "Cliente {$id} atualizado (Simulado)!",
-            'data' => $dados,
+            'message' => 'Cliente atualizado com sucesso!',
+            'data' => $client,
         ], 200);
     }
 
     // DELETE /clients/{id} - Deletar
-    public function destroy($id)
+    public function destroy(Client $client): JsonResponse
     {
+        $uuid = $client->uuid;
+
+        $client->delete();
+
         return response()->json([
-            'message' => "Cliente {$id} removido do sistema.",
+            'message' => 'Cliente removido do sistema.',
         ], 200);
     }
 }
