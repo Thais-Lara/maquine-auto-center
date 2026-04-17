@@ -13,15 +13,17 @@ class UpdateClientRequest extends FormRequest
 
     public function rules(): array
     {
-        // (Com banco de dados) Pegamos o ID do cliente da rota para ignorar na validação de 'unique'
-        // $clientId = $this->route('clientes')->id;
+
+        $clientId = $this->route('clientes');
 
         return [
             'nome' => ['sometimes', 'string', 'max:255'],
-            'documento' => ['sometimes', 'string', 'max:14'], // Removida a regra 'unique'
+            'documento' => ['sometimes', 'string', 'max:14', 'unique:clientes,documento,'.($client->id ?? 0)],
             'documento_tipo' => ['sometimes', 'in:CPF,CNPJ'],
             'email' => ['nullable', 'email'],
-            'data_nascimento' => ['nullable', 'date'],
+            'telefone' => ['nullable', 'string'],
+            'endereco' => ['nullable', 'string'],
+            'data_nascimento' => ['nullable', 'date_format:d/m/Y'],
         ];
     }
 
@@ -30,7 +32,7 @@ class UpdateClientRequest extends FormRequest
     {
         $enviados = array_keys($this->all());
 
-        $permitidos = ['nome', 'documento', 'documento_tipo', 'email', 'data_nascimento'];
+        $permitidos = ['nome', 'documento', 'documento_tipo', 'email', 'data_nascimento', 'telefone', 'endereco'];
 
         $intrusos = array_diff($enviados, $permitidos);
 
