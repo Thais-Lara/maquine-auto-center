@@ -15,6 +15,8 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/register', [LoginController::class, 'register']);
 
-// Route::middleware(['auth'])->group(function () {
-// });
-Route::apiResource('clientes', ClientController::class);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('clientes', ClientController::class)->parameters([
+        'clientes' => 'client',
+    ]);
+});
