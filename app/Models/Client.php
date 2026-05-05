@@ -2,58 +2,59 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Client extends Model
 {
     use HasFactory;
 
-    protected $table = 'clientes';
+    /*
+    |---------------------------------------
+    | Tabela real do banco
+    |---------------------------------------
+    */
+    protected $table = 'cliente';
 
+    /*
+    |---------------------------------------
+    | Primary key padrão (id)
+    |---------------------------------------
+    */
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+    protected $keyType = 'int';
+
+    /*
+    |---------------------------------------
+    | Campos permitidos
+    |---------------------------------------
+    */
     protected $fillable = [
-        'uuid',
         'nome',
-        'documento',
-        'documento_tipo',
+        'cpf_cnpj',
         'email',
-        'telefone',
         'endereco',
-        'data_nascimento',
+        'telefone',
+        'aniversario',
+        'data_inclusao',
     ];
 
+    /*
+    |---------------------------------------
+    | Timestamps customizados
+    |---------------------------------------
+    */
     const CREATED_AT = 'data_inclusao';
-
     const UPDATED_AT = null;
 
-    // Busca automatica pelo uuid na rota
-    public function getRouteKeyName()
-    {
-        return 'uuid';
-    }
-
-    // Gera uuid ao criar um cliente
-    protected static function booted()
-    {
-        static::creating(function ($client) {
-            $client->uuid = (string) Str::uuid();
-        });
-    }
-
+    /*
+    |---------------------------------------
+    | Casts corretos (sem quebrar Carbon)
+    |---------------------------------------
+    */
     protected $casts = [
-        'data_nascimento' => 'date',
+        'aniversario' => 'date',
         'data_inclusao' => 'datetime',
     ];
-
-    // Formatar data (formato brasileiro)
-    protected function dataNascimento(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value ? Carbon::parse($value)->format('d/m/Y') : null,
-            set: fn ($value) => $value ? Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d') : null,
-        );
-    }
 }
